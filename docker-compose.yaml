@@ -1,0 +1,18 @@
+services:
+  promtail:
+    image: grafana/promtail
+    container_name: promtail
+    command:
+      ["-config.expand-env=true", "-config.file=/etc/promtail/config.yaml"]
+    volumes:
+      - ./promtail.yaml:/etc/promtail/config.yaml
+      - /var/log:/var/log
+    networks:
+      - promtail-network
+      - shared-network
+
+networks:
+  promtail-network:
+    driver: bridge
+  shared-network:
+    external: true
